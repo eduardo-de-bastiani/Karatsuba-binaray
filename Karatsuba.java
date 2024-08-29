@@ -7,7 +7,7 @@ public class Karatsuba{
         int mid, tam;
 
         if(val1.length() == 1 && val2.length() == 1){
-            return Integer.toString((val1.charAt(0) - '0') * (val2.charAt(0) - '0'));
+            return multBinary(val1, val2);
         }
 
         
@@ -52,10 +52,17 @@ public class Karatsuba{
         sb.append(str);
         return sb.toString();
 
-        //or return "0".repeat(tam - str.length()) + str; // less memory efficient
+        //ou return "0".repeat(tam - str.length()) + str; // menos eficiente
     }
 
     
+    public static String multBinary(String val1, String val2){
+        if(val1.equals("1")  && val2.equals("1")){
+            return "1";
+        }
+        return "0";
+    }
+
     public static String shiftBinary(String str, int n){
         return str + "0".repeat(n);
     }
@@ -63,7 +70,7 @@ public class Karatsuba{
 
 
     public static String addBinary(String a, String b){
-        StringBuilder result = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         int carry = 0;
         int maxLength = Math.max(a.length(), b.length());
 
@@ -76,21 +83,21 @@ public class Karatsuba{
             int bit1 = a.charAt(i) - '0';
             int bit2 = b.charAt(i) - '0';
             int sum = bit1 + bit2 + carry;
-            result.append(sum % 2);  // Adiciona o bit de soma ao resultado
+            sb.append(sum % 2);  // Adiciona o bit de soma ao resultado
             carry = sum / 2;         // Calcula o novo carry
         }
 
         // Se houver carry sobrando, adiciona ao resultado
         if (carry != 0) {
-            result.append(carry);
+            sb.append(carry);
         }
 
-        return result.reverse().toString();
+        return sb.reverse().toString();
         
     }
 
     public static String subBinary(String a, String b){
-        StringBuilder result = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         int borrow = 0;
         int maxLength = Math.max(a.length(), b.length());
 
@@ -108,15 +115,15 @@ public class Karatsuba{
             } else {
                 borrow = 0;
             }
-            result.append(bit1 - bit2);
+            sb.append(bit1 - bit2);
         }
 
          // Remove zeros à esquerda desnecessários do resultado final
-         while (result.length() > 1 && result.charAt(result.length() - 1) == '0') {
-            result.deleteCharAt(result.length() - 1);
+         while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
+            sb.deleteCharAt(sb.length() - 1);
         }
 
-        return result.reverse().toString();
+        return sb.reverse().toString();
     }
 
     public static void main(String[] args) {
