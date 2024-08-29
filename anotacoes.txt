@@ -22,7 +22,7 @@
 
 - como?
 calculo (a1 + a2) * (b1 + b2)
-como já tenho a1b1 e a2b2, vou subtrair do resultado acima para saber (a2b1 + a1b2)
+como vou calcular as multiplicações a1b1 e a2b2, vou subtrair do resultado acima para saber (a2b1 + a1b2)
 
 
 - vamos fazer um exemplo:
