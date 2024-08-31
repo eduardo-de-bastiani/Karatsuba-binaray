@@ -6,6 +6,7 @@ public class Karatsuba{
         String a1, a2, b1, b2, res;
         int mid, tam;
 
+        //verificacao valores 1 digito
         if(val1.length() == 1 && val2.length() == 1){
             return multBinary(val1, val2);
         }
@@ -74,20 +75,19 @@ public class Karatsuba{
         int carry = 0;
         int maxLength = Math.max(a.length(), b.length());
 
-        // Adiciona zeros à esquerda para igualar o tamanho
         a = concatZeros(a, maxLength);
         b = concatZeros(b, maxLength);
 
-        // Percorre as strings de trás para frente, somando bit a bit
+        //percorre as strings de tras pra frente somando bit a bit
         for (int i = maxLength - 1; i >= 0; i--) {
             int bit1 = a.charAt(i) - '0';
             int bit2 = b.charAt(i) - '0';
             int sum = bit1 + bit2 + carry;
-            sb.append(sum % 2);  // Adiciona o bit de soma ao resultado
-            carry = sum / 2;         // Calcula o novo carry
+            sb.append(sum % 2);  //adiciona o bit de soma ao resultado
+            carry = sum / 2;         //calcula o novo carry
         }
 
-        // Se houver carry sobrando, adiciona ao resultado
+        //se tiver carry sobrando, adiciona ao resultado
         if (carry != 0) {
             sb.append(carry);
         }
@@ -101,11 +101,10 @@ public class Karatsuba{
         int borrow = 0;
         int maxLength = Math.max(a.length(), b.length());
 
-        // Adiciona zeros à esquerda para igualar o tamanho
         a = concatZeros(a, maxLength);
         b = concatZeros(b, maxLength);
 
-        // Percorre as strings de trás para frente, subtraindo bit a bit
+        //percorre as strings de tras para frente
         for (int i = maxLength - 1; i >= 0; i--) {
             int bit1 = a.charAt(i) - '0';
             int bit2 = b.charAt(i) - '0' + borrow;
@@ -118,7 +117,7 @@ public class Karatsuba{
             sb.append(bit1 - bit2);
         }
 
-         // Remove zeros à esquerda desnecessários do resultado final
+         //remove zeros à esquerda
          while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
             sb.deleteCharAt(sb.length() - 1);
         }
