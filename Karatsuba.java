@@ -13,11 +13,11 @@ public class Karatsuba{
 
         
         tam = Math.max(val1.length(), val2.length());
+        //pega o valor do meio
+        mid = tam / 2;
         val1 = concatZeros(val1, tam);
         val2 = concatZeros(val2, tam);
 
-        //pega o valor do meio
-        mid = tam / 2;
         
         //divide as strings em 2
         a1 = val1.substring(0, mid);
@@ -29,14 +29,16 @@ public class Karatsuba{
 
         String a1b1 = multKaratsuba(a1, b1);
         String a2b2 = multKaratsuba(a2, b2);
-        String a1a2b1b2 = multKaratsuba(addBinary(a1, a2), addBinary(b1, b2));
+        String a1a2 = sumBinary(a1, a2);
+        String b1b2 = sumBinary(b1, b2); 
+        String a1a2b1b2 = multKaratsuba(a1a2, b1b2);
 
 
         // (a1 + a2) * (b1 + b2) - a1b1 - a2b2
         String a1b2a2b1 = subBinary(subBinary(a1a2b1b2, a1b1), a2b2);
 
         // a1b1 << (2 * mid) + a1b2a2b1 << mid + a2b2
-        res = addBinary(addBinary(shiftBinary(a1b1, 2 * (tam - mid)), shiftBinary(a1b2a2b1, tam - mid)), a2b2);
+        res = sumBinary(sumBinary(shiftBinary(a1b1, 2 * (tam - mid)), shiftBinary(a1b2a2b1, tam - mid)), a2b2);
 
         return res;
     }
@@ -70,7 +72,7 @@ public class Karatsuba{
 
 
 
-    public static String addBinary(String a, String b){
+    public static String sumBinary(String a, String b){
         StringBuilder sb = new StringBuilder();
         int carry = 0;
         int maxLength = Math.max(a.length(), b.length());
@@ -92,9 +94,94 @@ public class Karatsuba{
             sb.append(carry);
         }
 
+         //remove zeros à esquerda
+         while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
         return sb.reverse().toString();
         
     }
+
+
+    // public static String sumBinary(String a, String b) {
+    //     StringBuilder sb = new StringBuilder();
+
+    //     int maxLength = Math.max(a.length(), b.length());
+    //     a = concatZeros(a, maxLength);
+    //     b = concatZeros(b, maxLength);
+    //     char carry = '0';
+
+    //     for (int i = maxLength - 1; i >= 0; i--) {
+    //         char bitA = a.charAt(i);
+    //         char bitB = b.charAt(i);
+            
+    //         char resultBit;
+            
+    //         if (bitA == '0' && bitB == '0') {
+    //             resultBit = (carry == '1') ? '1' : '0';
+    //             carry = (carry == '1') ? '0' : '0';
+    //         } else if ((bitA == '0' && bitB == '1') || (bitA == '1' && bitB == '0')) {
+    //             resultBit = (carry == '1') ? '0' : '1';
+    //             carry = (carry == '1') ? '1' : '0';
+    //         } else { // bitA == '1' && bitB == '1'
+    //             resultBit = (carry == '1') ? '1' : '0';
+    //             carry = '1';
+    //         }
+            
+    //         sb.append(resultBit);
+    //     }
+
+    //     if (carry == '1') {
+    //         sb.append('1');
+    //     }
+
+    //     return sb.reverse().toString();
+    // }
+
+    // public static String subBinary(String a, String b) {
+    //     StringBuilder sb = new StringBuilder();
+        
+    //     // Igualar o comprimento das strings adicionando zeros à esquerda
+    //     int maxLength = Math.max(a.length(), b.length());
+    //     a = concatZeros(a, maxLength);
+    //     b = concatZeros(b, maxLength);
+        
+    //     int borrow = 0;  // Usa para rastrear se há um empréstimo
+    
+    //     for (int i = maxLength - 1; i >= 0; i--) {
+    //         char bitA = a.charAt(i);
+    //         char bitB = b.charAt(i);
+            
+    //         char resultBit;
+            
+    //         if (bitA == '0' && bitB == '0') {
+    //             resultBit = (borrow == '0') ? '0' : '1';
+    //             borrow = (borrow == '0') ? '0' : '1';
+    //         } else if (bitA == '0' && bitB == '1') {
+    //             resultBit = (borrow == '0') ? '1' : '0';
+    //             borrow = '1';
+    //         } else if (bitA == '1' && bitB == '0') {
+    //             resultBit = (borrow == '0') ? '1' : '0';
+    //             borrow = '0';
+    //         } else { // bitA == '1' && bitB == '1'
+    //             resultBit = (borrow == '0') ? '0' : '1';
+    //             borrow = '0';
+    //         }
+    
+    //         sb.append(resultBit);
+    //     }
+    
+    //     // Remove os zeros à esquerda
+    //     while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
+    //         sb.deleteCharAt(sb.length() - 1);
+    //     }
+    
+    //     return sb.reverse().toString();
+    // }
+    
+
+
 
     public static String subBinary(String a, String b){
         StringBuilder sb = new StringBuilder();
