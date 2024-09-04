@@ -72,149 +72,127 @@ public class Karatsuba{
 
 
 
-    public static String sumBinary(String a, String b){
-        StringBuilder sb = new StringBuilder();
-        int carry = 0;
-        int maxLength = Math.max(a.length(), b.length());
-
-        a = concatZeros(a, maxLength);
-        b = concatZeros(b, maxLength);
-
-        //percorre as strings de tras pra frente somando bit a bit
-        for (int i = maxLength - 1; i >= 0; i--) {
-            int bit1 = a.charAt(i) - '0';
-            int bit2 = b.charAt(i) - '0';
-            int sum = bit1 + bit2 + carry;
-            sb.append(sum % 2);  //adiciona o bit de soma ao resultado
-            carry = sum / 2;         //calcula o novo carry
-        }
-
-        //se tiver carry sobrando, adiciona ao resultado
-        if (carry != 0) {
-            sb.append(carry);
-        }
-
-         //remove zeros à esquerda
-         while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
-            sb.deleteCharAt(sb.length() - 1);
-        }
-
-        return sb.reverse().toString();
-        
-    }
-
-
-    // public static String sumBinary(String a, String b) {
+    // public static String sumBinary(String a, String b){
     //     StringBuilder sb = new StringBuilder();
-
+    //     int carry = 0;
     //     int maxLength = Math.max(a.length(), b.length());
+
     //     a = concatZeros(a, maxLength);
     //     b = concatZeros(b, maxLength);
-    //     char carry = '0';
 
+    //     //percorre as strings de tras pra frente somando bit a bit
     //     for (int i = maxLength - 1; i >= 0; i--) {
-    //         char bitA = a.charAt(i);
-    //         char bitB = b.charAt(i);
-            
-    //         char resultBit;
-            
-    //         if (bitA == '0' && bitB == '0') {
-    //             resultBit = (carry == '1') ? '1' : '0';
-    //             carry = (carry == '1') ? '0' : '0';
-    //         } else if ((bitA == '0' && bitB == '1') || (bitA == '1' && bitB == '0')) {
-    //             resultBit = (carry == '1') ? '0' : '1';
-    //             carry = (carry == '1') ? '1' : '0';
-    //         } else { // bitA == '1' && bitB == '1'
-    //             resultBit = (carry == '1') ? '1' : '0';
-    //             carry = '1';
-    //         }
-            
-    //         sb.append(resultBit);
+    //         int bit1 = a.charAt(i) - '0';
+    //         int bit2 = b.charAt(i) - '0';
+    //         int sum = bit1 + bit2 + carry;
+    //         sb.append(sum % 2);  //adiciona o bit de soma ao resultado
+    //         carry = sum / 2;         //calcula o novo carry
     //     }
 
-    //     if (carry == '1') {
-    //         sb.append('1');
+    //     //se tiver carry sobrando, adiciona ao resultado
+    //     if (carry != 0) {
+    //         sb.append(carry);
     //     }
 
-    //     while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
+    //      //remove zeros à esquerda
+    //      while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
     //         sb.deleteCharAt(sb.length() - 1);
     //     }
-        
+
     //     return sb.reverse().toString();
+        
     // }
 
-    // public static String subBinary(String a, String b) {
-    //     StringBuilder sb = new StringBuilder();
-        
-    //     // Igualar o comprimento das strings adicionando zeros à esquerda
-    //     int maxLength = Math.max(a.length(), b.length());
-    //     a = concatZeros(a, maxLength);
-    //     b = concatZeros(b, maxLength);
-        
-    //     int borrow = 0;  // Usa para rastrear se há um empréstimo
-    
-    //     for (int i = maxLength - 1; i >= 0; i--) {
-    //         char bitA = a.charAt(i);
-    //         char bitB = b.charAt(i);
-            
-    //         char resultBit;
-            
-    //         if (bitA == '0' && bitB == '0') {
-    //             resultBit = (borrow == '0') ? '0' : '1';
-    //             borrow = (borrow == '0') ? '0' : '1';
-    //         } else if (bitA == '0' && bitB == '1') {
-    //             resultBit = (borrow == '0') ? '1' : '0';
-    //             borrow = '1';
-    //         } else if (bitA == '1' && bitB == '0') {
-    //             resultBit = (borrow == '0') ? '1' : '0';
-    //             borrow = '0';
-    //         } else { // bitA == '1' && bitB == '1'
-    //             resultBit = (borrow == '0') ? '0' : '1';
-    //             borrow = '0';
-    //         }
-    
-    //         sb.append(resultBit);
-    //     }
-    
-    //     // Remove os zeros à esquerda
-    //     while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
-    //         sb.deleteCharAt(sb.length() - 1);
-    //     }
-    
-    //     return sb.reverse().toString();
-    // }
-    
 
-
-
-    public static String subBinary(String a, String b){
+    public static String sumBinary(String a, String b) {
         StringBuilder sb = new StringBuilder();
-        int borrow = 0;
-        int maxLength = Math.max(a.length(), b.length());
 
+        int maxLength = Math.max(a.length(), b.length());
         a = concatZeros(a, maxLength);
         b = concatZeros(b, maxLength);
+        char carry = '0';
 
-        //percorre as strings de tras para frente
         for (int i = maxLength - 1; i >= 0; i--) {
-            int bit1 = a.charAt(i) - '0';
-            int bit2 = b.charAt(i) - '0' + borrow;
-            if (bit1 < bit2) {
-                bit1 += 2;
-                borrow = 1;
+            char bitA = a.charAt(i);
+            char bitB = b.charAt(i);
+
+            if(bitA == '0' && bitB == '0') {
+                sb.append( (carry == '0') ? '0' : '1' );
+                carry = '0';
+            } else if (bitA == '1' && bitB == '1') {
+                sb.append( (carry == '0') ? '0' : '1' );
+                carry = '1';
             } else {
-                borrow = 0;
+                sb.append( (carry == '0') ? '1' : '0');
+                carry = (carry == '0') ? '0' : '1'; 
             }
-            sb.append(bit1 - bit2);
         }
 
-         //remove zeros à esquerda
-         while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
+        if (carry == '1') sb.append(carry);
+
+        while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
             sb.deleteCharAt(sb.length() - 1);
         }
-
+        
         return sb.reverse().toString();
     }
+
+
+    public static String subBinary(String a, String b) {
+        StringBuilder comp = new StringBuilder();
+
+        int maxLength = Math.max(a.length(), b.length());
+        a = concatZeros(a, maxLength);
+        b = concatZeros(b, maxLength);
+
+        //calcula complemento de 1
+        for(int i = 0; i < b.length(); i++){
+            char c = (b.charAt(i) == '0') ? '1' : '0';
+            comp.append(c);
+        }
+
+        //calcula complemento de 2
+        String complement2 = sumBinary(comp.toString(), "1");
+
+        //complemento de 2
+        String res = sumBinary(a, complement2);
+
+        //remove bit extra
+        if(res.length() > a.length()){
+            res = res.substring(1);
+        }
+
+        return res;
+    }
+
+    // public static String subBinary(String a, String b){
+    //     StringBuilder sb = new StringBuilder();
+    //     int borrow = 0;
+    //     int maxLength = Math.max(a.length(), b.length());
+
+    //     a = concatZeros(a, maxLength);
+    //     b = concatZeros(b, maxLength);
+
+    //     //percorre as strings de tras para frente
+    //     for (int i = maxLength - 1; i >= 0; i--) {
+    //         int bit1 = a.charAt(i) - '0';
+    //         int bit2 = b.charAt(i) - '0' + borrow;
+    //         if (bit1 < bit2) {
+    //             bit1 += 2;
+    //             borrow = 1;
+    //         } else {
+    //             borrow = 0;
+    //         }
+    //         sb.append(bit1 - bit2);
+    //     }
+
+    //      //remove zeros à esquerda
+    //      while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
+    //         sb.deleteCharAt(sb.length() - 1);
+    //     }
+
+    //     return sb.reverse().toString();
+    // }
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
