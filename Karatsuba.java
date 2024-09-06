@@ -25,8 +25,6 @@ public class Karatsuba{
         b1 = val2.substring(0, mid);
         b2 = val2.substring(mid);
 
-
-
         String a1b1 = multKaratsuba(a1, b1);
         String a2b2 = multKaratsuba(a2, b2);
         String a1a2 = sumBinary(a1, a2);
@@ -69,40 +67,6 @@ public class Karatsuba{
     public static String shiftBinary(String str, int n){
         return str + "0".repeat(n);
     }
-
-
-
-    // public static String sumBinary(String a, String b){
-    //     StringBuilder sb = new StringBuilder();
-    //     int carry = 0;
-    //     int maxLength = Math.max(a.length(), b.length());
-
-    //     a = concatZeros(a, maxLength);
-    //     b = concatZeros(b, maxLength);
-
-    //     //percorre as strings de tras pra frente somando bit a bit
-    //     for (int i = maxLength - 1; i >= 0; i--) {
-    //         int bit1 = a.charAt(i) - '0';
-    //         int bit2 = b.charAt(i) - '0';
-    //         int sum = bit1 + bit2 + carry;
-    //         sb.append(sum % 2);  //adiciona o bit de soma ao resultado
-    //         carry = sum / 2;         //calcula o novo carry
-    //     }
-
-    //     //se tiver carry sobrando, adiciona ao resultado
-    //     if (carry != 0) {
-    //         sb.append(carry);
-    //     }
-
-    //      //remove zeros à esquerda
-    //      while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
-    //         sb.deleteCharAt(sb.length() - 1);
-    //     }
-
-    //     return sb.reverse().toString();
-        
-    // }
-
 
     public static String sumBinary(String a, String b) {
         StringBuilder sb = new StringBuilder();
@@ -164,35 +128,6 @@ public class Karatsuba{
 
         return res;
     }
-
-    // public static String subBinary(String a, String b){
-    //     StringBuilder sb = new StringBuilder();
-    //     int borrow = 0;
-    //     int maxLength = Math.max(a.length(), b.length());
-
-    //     a = concatZeros(a, maxLength);
-    //     b = concatZeros(b, maxLength);
-
-    //     //percorre as strings de tras para frente
-    //     for (int i = maxLength - 1; i >= 0; i--) {
-    //         int bit1 = a.charAt(i) - '0';
-    //         int bit2 = b.charAt(i) - '0' + borrow;
-    //         if (bit1 < bit2) {
-    //             bit1 += 2;
-    //             borrow = 1;
-    //         } else {
-    //             borrow = 0;
-    //         }
-    //         sb.append(bit1 - bit2);
-    //     }
-
-    //      //remove zeros à esquerda
-    //      while (sb.length() > 1 && sb.charAt(sb.length() - 1) == '0') {
-    //         sb.deleteCharAt(sb.length() - 1);
-    //     }
-
-    //     return sb.reverse().toString();
-    // }
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
